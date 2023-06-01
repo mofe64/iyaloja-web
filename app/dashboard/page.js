@@ -1,10 +1,10 @@
-import Image from "next/image";
+import React from "react";
 
-export default function Home() {
+export default function DashboardHome() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div>
-        <h1>Hello world - Home page</h1>
+        <h1>Dashboard Home</h1>
       </div>
     </main>
   );
