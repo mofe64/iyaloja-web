@@ -14,13 +14,13 @@ export default function DashboardNav({ show, hideNav = (f) => f }) {
     <div
       className={
         (show ? "left-0" : "-left-full") +
-        " top-0 text-gray-500 p-4 fixed w-full bg-customGray h-full md:static md:w-auto transition-all"
+        " top-0 text-gray-500 p-4 fixed w-full bg-customGray h-screen md:static md:w-auto transition-all"
       }
     >
-      <div className="mb-4 mr-4">
+      <div className="mb-4 mr-4 h-1/5">
         <Logo />
       </div>
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-5">
         <Link
           href={"/dashboard"}
           onClick={hideNav}
@@ -159,6 +159,24 @@ export default function DashboardNav({ show, hideNav = (f) => f }) {
           Profile
         </Link>
       </nav>
+      <div className="lg:hidden md:hidden w-full h-1/2 flex justify-center">
+        <button title="close menu" onClick={hideNav}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-10 h-10"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }

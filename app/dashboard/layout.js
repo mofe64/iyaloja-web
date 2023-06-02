@@ -33,7 +33,10 @@ const DashboardLayout = ({ children }) => {
       </div>
 
       <div className="flex">
-        <DashboardNav show={showNav} hideNav={hideNav} />
+        <div className="lg:w-1/6">
+          <DashboardNav show={showNav} hideNav={hideNav} />
+        </div>
+
         <div className="bg-white flex-grow mt-2 mr-2 mb-2 rounded-lg p-4">
           {children}
         </div>
