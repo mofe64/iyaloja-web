@@ -1,4 +1,5 @@
 export default function EditProduct({ params }) {
+  console.log(params);
   return (
     <div className="min-h-screen">
       <h1>Edit an existing product</h1>

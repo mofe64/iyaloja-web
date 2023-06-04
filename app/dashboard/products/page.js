@@ -1,5 +1,10 @@
+"use client";
 import Link from "next/link";
+import DeleteModal from "@/components/modal";
+import { useState } from "react";
 export default function DashboardProducts() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <main className="flex min-h-screen flex-col p-2">
       <Link
@@ -8,6 +13,16 @@ export default function DashboardProducts() {
       >
         <p>New Product</p>
       </Link>
+      <DeleteModal
+        entity={"Product"}
+        show={showModal}
+        close={() => {
+          setShowModal(false);
+        }}
+        deleteFunc={() => {
+          setShowModal(false);
+        }}
+      />
       <h1 className="font-bold text-lg">Latest Products</h1>
       <div className="w-full shadow-lg p-1 flex flex-col md:flex-row justify-between items-center mr-4 mb-4 py-3">
         <div>
@@ -16,7 +31,7 @@ export default function DashboardProducts() {
         <div className="flex flex-wrap lg:w-1/4 justify-around items-baseline">
           <Link
             className=" flex items-center mr-1 mb-1 text-yellow-600 md:text-xl text-lg"
-            href={"/products/edit/"}
+            href={"/dashboard/products/1/edit/"}
           >
             <p className="font-semibold mr-1">Edit</p>
             <svg
@@ -34,9 +49,9 @@ export default function DashboardProducts() {
               />
             </svg>
           </Link>
-          <Link
+          <button
             className=" flex items-center text-red-600 md:text-xl text-lg"
-            href={"/products/delete/"}
+            onClick={() => setShowModal(true)}
           >
             <p>Delete</p>
             <svg
@@ -53,7 +68,7 @@ export default function DashboardProducts() {
                 d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
               />
             </svg>
-          </Link>
+          </button>
         </div>
       </div>
     </main>
