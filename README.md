@@ -38,3 +38,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 1. https://stackoverflow.com/questions/75643129/problem-with-running-nextjs-app-stopped-immediately-after-started
 2. https://stackoverflow.com/questions/73142994/error-cannot-find-module-tailwindcss-next-js-application
 3. https://www.npmjs.com/package/@heroicons/react
+4. https://stackoverflow.com/questions/65839932/how-to-route-to-or-navigate-to-a-route-programmatically-in-nextjs-class-componen
