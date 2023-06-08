@@ -50,10 +50,10 @@ const DashboardLayout = ({ children }) => {
       current: pathname.includes("customers"),
     },
     {
-      name: "Income/Expenses",
-      href: "/dashboard/transactions",
+      name: "Expenses",
+      href: "/dashboard/expenses",
       icon: BanknotesIcon,
-      current: pathname.includes("transactions"),
+      current: pathname.includes("expenses"),
     },
     {
       name: "Invoices",

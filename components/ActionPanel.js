@@ -7,8 +7,8 @@ export default function ActionPanel() {
         </h3>
         <div className="mt-2 max-w-xl text-sm text-gray-500">
           <p>
-            Link your business account to your admin dashboard to automatically
-            get updates whenever funds enter and leave your business account
+            Automate your expense tracking by directly linkng your business
+            account. This way you don't have to manually add expenses.
           </p>
         </div>
         <button
