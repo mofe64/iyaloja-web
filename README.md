@@ -39,3 +39,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 2. https://stackoverflow.com/questions/73142994/error-cannot-find-module-tailwindcss-next-js-application
 3. https://www.npmjs.com/package/@heroicons/react
 4. https://stackoverflow.com/questions/65839932/how-to-route-to-or-navigate-to-a-route-programmatically-in-nextjs-class-componen
+5. https://stackoverflow.com/questions/70125627/copy-current-url-with-userouter-in-next-js#:~:text=In%20Next%20JS%2C%20you%27re%20writing%20React%2C%20that%27s%20why,call%20the%20method%3A%20%3Cbutton%20copyToClipboard%3D%20%7BcurrentLink%7D%3E%20Copy%20%3C%2Fbutton%3E

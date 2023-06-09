@@ -1,6 +1,6 @@
 "use client";
 import { Fragment, useState } from "react";
-import { Dialog, Listbox, Menu, Transition } from "@headlessui/react";
+import { Listbox, Menu, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import {
   CalendarDaysIcon,
@@ -17,6 +17,8 @@ import {
   ArrowLeftIcon,
 } from "@heroicons/react/20/solid";
 import { CheckCircleIcon, ArrowDownLeftIcon } from "@heroicons/react/24/solid";
+import InputModal from "@/components/InputModal";
+import SuccessNotification from "@/components/NotificationSuccess";
 
 const invoice = {
   subTotal: "$8,800.00",
@@ -158,10 +160,26 @@ function classNames(...classes) {
 
 export default function InvoiceDetails() {
   const [selected, setSelected] = useState(moods[5]);
+  const [showSendModal, setShowSendModal] = useState(false);
+  const [showUrlCopyNotification, setShowUrlCopyNotification] = useState(false);
   const router = useRouter();
 
   return (
     <>
+      <InputModal
+        show={showSendModal}
+        title="Send Invoice via email"
+        body="Send this invoice directly to the customer's email. You only have 3 free emails a month on our free plan. If you're out of emails consider sending an invoice url instead"
+        ctaText="Send Invoice"
+        ctaFunc={() => setShowSendModal(false)}
+        close={() => setShowSendModal(false)}
+      />
+      <SuccessNotification
+        show={showUrlCopyNotification}
+        closeFunc={() => setShowUrlCopyNotification(false)}
+        header="Success"
+        text="Invoice share link copied"
+      />
       <main>
         <button className="w-7" onClick={() => router.back()}>
           <ArrowLeftIcon className="text-black" />
@@ -204,6 +222,20 @@ export default function InvoiceDetails() {
                 <button
                   type="button"
                   className="hidden text-sm font-semibold leading-6 text-gray-900 sm:block"
+                  onClick={async () => {
+                    const currentUrl = window.location;
+                    const invoiceId = 1;
+                    const businessName = "nubari";
+                    const url = `${currentUrl.protocol}//${currentUrl.hostname}:${currentUrl.port}/publicInvoice/${businessName}/${invoiceId}`;
+                    navigator.clipboard
+                      .writeText(url)
+                      .then(() => {
+                        setShowUrlCopyNotification(true);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  }}
                 >
                   Copy URL
                 </button>
@@ -213,12 +245,12 @@ export default function InvoiceDetails() {
                 >
                   Edit
                 </a>
-                <a
-                  href="#"
+                <button
+                  onClick={() => setShowSendModal(true)}
                   className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Send
-                </a>
+                </button>
 
                 <Menu as="div" className="relative sm:hidden">
                   <Menu.Button className="-m-3 block p-3">

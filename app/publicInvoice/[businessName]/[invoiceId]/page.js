@@ -1,10 +1,20 @@
 "use client";
-import { useState } from "react";
-
-import { XMarkIcon } from "@heroicons/react/20/solid";
-import { CheckCircleIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
-import SlideOver from "@/components/slideOver";
+import { Fragment, useState } from "react";
+import { Listbox, Menu, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
+import {
+  CalendarDaysIcon,
+  CreditCardIcon,
+  FaceFrownIcon,
+  FaceSmileIcon,
+  FireIcon,
+  HandThumbUpIcon,
+  HeartIcon,
+  PaperClipIcon,
+  UserCircleIcon,
+  XMarkIcon as XMarkIconMini,
+} from "@heroicons/react/20/solid";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
 const invoice = {
   subTotal: "$8,800.00",
@@ -49,9 +59,94 @@ const activity = [
   {
     id: 1,
     type: "created",
-    person: { name: "Eyimofe Ogunbiyi" },
-    date: "Now",
+    person: { name: "Chelsea Hagon" },
+    date: "7d ago",
     dateTime: "2023-01-23T10:32",
+  },
+  {
+    id: 2,
+    type: "edited",
+    person: { name: "Chelsea Hagon" },
+    date: "6d ago",
+    dateTime: "2023-01-23T11:03",
+  },
+  {
+    id: 3,
+    type: "sent",
+    person: { name: "Chelsea Hagon" },
+    date: "6d ago",
+    dateTime: "2023-01-23T11:24",
+  },
+  {
+    id: 4,
+    type: "commented",
+    person: {
+      name: "Chelsea Hagon",
+      imageUrl:
+        "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    },
+    comment:
+      "Called client, they reassured me the invoice would be paid by the 25th.",
+    date: "3d ago",
+    dateTime: "2023-01-23T15:56",
+  },
+  {
+    id: 5,
+    type: "viewed",
+    person: { name: "Alex Curren" },
+    date: "2d ago",
+    dateTime: "2023-01-24T09:12",
+  },
+  {
+    id: 6,
+    type: "paid",
+    person: { name: "Alex Curren" },
+    date: "1d ago",
+    dateTime: "2023-01-24T09:20",
+  },
+];
+const moods = [
+  {
+    name: "Excited",
+    value: "excited",
+    icon: FireIcon,
+    iconColor: "text-white",
+    bgColor: "bg-red-500",
+  },
+  {
+    name: "Loved",
+    value: "loved",
+    icon: HeartIcon,
+    iconColor: "text-white",
+    bgColor: "bg-pink-400",
+  },
+  {
+    name: "Happy",
+    value: "happy",
+    icon: FaceSmileIcon,
+    iconColor: "text-white",
+    bgColor: "bg-green-400",
+  },
+  {
+    name: "Sad",
+    value: "sad",
+    icon: FaceFrownIcon,
+    iconColor: "text-white",
+    bgColor: "bg-yellow-400",
+  },
+  {
+    name: "Thumbsy",
+    value: "thumbsy",
+    icon: HandThumbUpIcon,
+    iconColor: "text-white",
+    bgColor: "bg-blue-500",
+  },
+  {
+    name: "I feel nothing",
+    value: null,
+    icon: XMarkIconMini,
+    iconColor: "text-gray-400",
+    bgColor: "bg-transparent",
   },
 ];
 
@@ -59,16 +154,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function NewInvoice() {
-  const [openCustomerSelection, setOpenCustomerSelection] = useState(false);
-  const [openProductSelection, setOpenProductSelection] = useState(false);
-  const router = useRouter();
+export default function PublicInvoiceDetails() {
+  const [selected, setSelected] = useState(moods[5]);
   return (
     <>
       <main>
-        <button className="w-7" onClick={() => router.back()}>
-          <ArrowLeftIcon className="text-black" />
-        </button>
         <header className="relative isolate pt-3">
           <div
             className="absolute inset-0 -z-10 overflow-hidden"
@@ -96,26 +186,12 @@ export default function NewInvoice() {
                 />
                 <h1>
                   <div className="text-sm leading-6 text-gray-500">
-                    New Invoice <span className="text-gray-700"></span>
+                    Public Invoice <span className="text-gray-700">#00011</span>
                   </div>
                   <div className="mt-1 text-base font-semibold leading-6 text-gray-900">
-                    Your business name
+                    Tuple, Inc
                   </div>
                 </h1>
-              </div>
-              <div className="flex items-center gap-x-4 sm:gap-x-6">
-                <a
-                  href="#"
-                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Save
-                </a>
-                <a
-                  href="#"
-                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Save and send
-                </a>
               </div>
             </div>
           </div>
@@ -123,115 +199,94 @@ export default function NewInvoice() {
 
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {/* Invoice summary */}
+            <div className="lg:col-start-3 lg:row-end-1">
+              <h2 className="sr-only">Summary</h2>
+              <div className="rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5">
+                <dl className="flex flex-wrap">
+                  <div className="flex-auto pl-6 pt-6">
+                    <dt className="text-sm font-semibold leading-6 text-gray-900">
+                      Total Amount
+                    </dt>
+                    <dd className="mt-1 text-base font-semibold leading-6 text-gray-900">
+                      $10,560.00
+                    </dd>
+                  </div>
+                  <div className="flex-none self-end px-6 pt-4">
+                    <dt className="sr-only">Status</dt>
+                    <dd className="rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-600 ring-1 ring-inset ring-yellow-600/20">
+                      Pending
+                    </dd>
+                  </div>
+
+                  <div className="mt-4 flex w-full flex-none gap-x-4 px-6">
+                    <dt className="flex-none">
+                      <span className="sr-only">Due date</span>
+                      <CalendarDaysIcon
+                        className="h-6 w-5 text-gray-400"
+                        aria-hidden="true"
+                      />
+                    </dt>
+                    <dd className="text-sm leading-6 text-gray-500">
+                      <time dateTime="2023-01-31">January 31, 2023</time>
+                    </dd>
+                  </div>
+                </dl>
+                <div className="mt-6 border-t border-gray-900/5 px-6 py-6">
+                  <a
+                    href={`${window.location.toString()}`}
+                    className="text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    Make Payment now <span aria-hidden="true">&rarr;</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
             {/* Invoice */}
             <div className="-mx-4 px-4 py-8 shadow-sm ring-1 ring-gray-900/5 sm:mx-0 sm:rounded-lg sm:px-8 sm:pb-14 lg:col-span-2 lg:row-span-2 lg:row-end-2 xl:px-16 xl:pb-20 xl:pt-16">
               <h2 className="text-base font-semibold leading-6 text-gray-900">
                 Invoice
               </h2>
-              <SlideOver
-                open={openCustomerSelection}
-                closeFunc={() => setOpenCustomerSelection(false)}
-              />
-              <SlideOver
-                open={openProductSelection}
-                closeFunc={() => setOpenProductSelection(false)}
-              />
-              <div>
-                <p
-                  className="text-base font-semibold text-primary"
-                  onClick={() => setOpenCustomerSelection(true)}
-                >
-                  Select Customer from existing customers
-                </p>
-                <p
-                  className="text-base font-semibold text-primary"
-                  onClick={() => setOpenProductSelection(true)}
-                >
-                  Select Product details from existing products
-                </p>
-                <p className="text-sm">Or enter details manually below</p>
-                <div className="border-b border-gray-900/10 pb-3" />
-              </div>
-              <dl className="mt-2 grid grid-cols-1 text-sm leading-6 sm:grid-cols-2">
-                <div className="sm:col-span-4">
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Issued to
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      placeholder="Enter customer full name or email"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
+              <dl className="mt-6 grid grid-cols-1 text-sm leading-6 sm:grid-cols-2">
+                <div className="sm:pr-4">
+                  <dt className="inline text-gray-500">Issued on</dt>{" "}
+                  <dd className="inline text-gray-700">
+                    <time dateTime="2023-23-01">January 23, 2023</time>
+                  </dd>
+                </div>
+                <div className="mt-2 sm:mt-0 sm:pl-4">
+                  <dt className="inline text-gray-500">Due on</dt>{" "}
+                  <dd className="inline text-gray-700">
+                    <time dateTime="2023-31-01">January 31, 2023</time>
+                  </dd>
+                </div>
+                <div className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4">
+                  <dt className="font-semibold text-gray-900">From</dt>
+                  <dd className="mt-2 text-gray-500">
+                    <span className="font-medium text-gray-900">
+                      Acme, Inc.
+                    </span>
+                    <br />
+                    7363 Cynthia Pass
+                    <br />
+                    Toronto, ON N3Y 4H8
+                  </dd>
+                </div>
+                <div className="mt-8 sm:mt-6 sm:border-t sm:border-gray-900/5 sm:pl-4 sm:pt-6">
+                  <dt className="font-semibold text-gray-900">To</dt>
+                  <dd className="mt-2 text-gray-500">
+                    <span className="font-medium text-gray-900">
+                      Tuple, Inc
+                    </span>
+                    <br />
+                    886 Walter Street
+                    <br />
+                    New York, NY 12345
+                  </dd>
                 </div>
               </dl>
-              <dl className="mt-1 grid grid-cols-1 text-sm leading-6 sm:grid-cols-2">
-                <div className="sm:col-span-4">
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Product name
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      placeholder="Enter product name"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="date"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Product Quantity
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="number"
-                      name="date"
-                      id="date"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="amount"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Product Unit price
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      type="number"
-                      name="amount"
-                      id="amount"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-              </dl>
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Add Item
-                </button>
-              </div>
-              <h1 className="mt-5">Invoice Preview</h1>
-              <table className="mt-10 w-full whitespace-nowrap text-left text-sm leading-6">
+              <table className="mt-16 w-full whitespace-nowrap text-left text-sm leading-6">
                 <colgroup>
                   <col className="w-full" />
                   <col />
@@ -241,30 +296,26 @@ export default function NewInvoice() {
                 <thead className="border-b border-gray-200 text-gray-900">
                   <tr>
                     <th scope="col" className="px-0 py-3 font-semibold">
-                      Products
+                      Projects
                     </th>
                     <th
                       scope="col"
                       className="hidden py-3 pl-8 pr-0 text-right font-semibold sm:table-cell"
                     >
-                      Quantity
+                      Hours
                     </th>
                     <th
                       scope="col"
                       className="hidden py-3 pl-8 pr-0 text-right font-semibold sm:table-cell"
                     >
-                      Unit price
+                      Rate
                     </th>
                     <th
                       scope="col"
                       className="py-3 pl-8 pr-0 text-right font-semibold"
                     >
-                      Total price
+                      Price
                     </th>
-                    <th
-                      scope="col"
-                      className="py-3 pl-8 pr-0 text-right font-semibold"
-                    ></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -286,12 +337,6 @@ export default function NewInvoice() {
                       </td>
                       <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">
                         {item.price}
-                      </td>
-                      <td className="py-5 pl-8 pr-0 text-right align-top tabular-nums text-gray-700">
-                        <XMarkIcon
-                          className="h-6 w-6 text-red-600 cursor-pointer"
-                          aria-hidden="true"
-                        />
                       </td>
                     </tr>
                   ))}
@@ -375,11 +420,7 @@ export default function NewInvoice() {
                     </div>
                     {activityItem.type === "commented" ? (
                       <>
-                        <img
-                          src={activityItem.person.imageUrl}
-                          alt=""
-                          className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50"
-                        />
+                        <div className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50" />
                         <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200">
                           <div className="flex justify-between gap-x-4">
                             <div className="py-0.5 text-xs leading-5 text-gray-500">
@@ -435,19 +476,20 @@ export default function NewInvoice() {
                 <form action="#" className="relative flex-auto">
                   <div className="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
                     <label htmlFor="comment" className="sr-only">
-                      Add a comment
+                      Add your comment
                     </label>
                     <textarea
                       rows={2}
                       name="comment"
                       id="comment"
                       className="block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Add a comment..."
+                      placeholder="Add your comment..."
                       defaultValue={""}
                     />
                   </div>
 
-                  <div className="absolute inset-x-0 bottom-0 flex justify-end py-2 pl-3 pr-2">
+                  <div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
+                    <div className="flex items-center space-x-5"></div>
                     <button
                       type="submit"
                       className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
