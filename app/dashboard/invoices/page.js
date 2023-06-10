@@ -89,9 +89,12 @@ export default function InvoicesDashboard() {
           >
             <div className="min-w-0">
               <div className="flex items-start gap-x-3">
-                <p className="text-sm font-semibold leading-6 text-gray-900">
+                <Link
+                  href={"/dashboard/invoices/1/details"}
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
                   {project.name}
-                </p>
+                </Link>
                 <p
                   className={classNames(
                     statuses[project.status],

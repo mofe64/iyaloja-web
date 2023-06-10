@@ -76,7 +76,7 @@ export default function DashboardOrders() {
         className="btn-primary lg:w-[15%] w-[50%] mb-5 text-center"
         href={"/dashboard/orders/new"}
       >
-        <p>Add new Order</p>
+        <p>New Order</p>
       </Link>
       <h1 className="font-bold text-lg">Latest Orders</h1>
       <ul role="list" className="divide-y divide-gray-100">
@@ -87,9 +87,12 @@ export default function DashboardOrders() {
           >
             <div className="min-w-0">
               <div className="flex items-start gap-x-3">
-                <p className="text-sm font-semibold leading-6 text-gray-900">
+                <Link
+                  href={"/dashboard/orders/1/details"}
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
                   {order.name}
-                </p>
+                </Link>
               </div>
               <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
                 <p className="whitespace-nowrap">

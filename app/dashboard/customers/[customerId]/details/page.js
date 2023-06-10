@@ -1,6 +1,7 @@
 "use client";
 import { PaperClipIcon, ArrowLeftIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function CustomerDetails() {
   const router = useRouter();
@@ -9,7 +10,7 @@ export default function CustomerDetails() {
       <button className="w-7" onClick={() => router.back()}>
         <ArrowLeftIcon className="text-black" />
       </button>
-      <div className="px-4 sm:px-0">
+      <div className="px-4 sm:px-0 mt-3">
         <h3 className="text-base font-semibold leading-7 text-gray-900">
           Customer Details
         </h3>
@@ -83,12 +84,12 @@ export default function CustomerDetails() {
                     </div>
                   </div>
                   <div className="ml-4 flex-shrink-0">
-                    <a
-                      href="#"
+                    <Link
+                      href="/dashboard/orders/1/details"
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       View Details
-                    </a>
+                    </Link>
                   </div>
                 </li>
                 <nav

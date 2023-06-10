@@ -76,7 +76,7 @@ export default function DashboardProducts() {
         className="btn-primary lg:w-[15%] w-[50%] mb-5 text-center"
         href={"/dashboard/products/new"}
       >
-        <p>Add new product</p>
+        <p>New product</p>
       </Link>
       <h1 className="font-bold text-lg">Recently Added</h1>
       <ul role="list" className="divide-y divide-gray-100">
@@ -87,9 +87,12 @@ export default function DashboardProducts() {
           >
             <div className="min-w-0">
               <div className="flex items-start gap-x-3">
-                <p className="text-sm font-semibold leading-6 text-gray-900">
+                <Link
+                  href={"/dashboard/products/1/details"}
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
                   {product.name}
-                </p>
+                </Link>
               </div>
               <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
                 <p className="whitespace-nowrap">
