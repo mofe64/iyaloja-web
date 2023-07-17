@@ -1,11 +1,14 @@
 "use client";
 import { PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import SlideOver from "@/components/slideOver";
+import FormSlideOver from "@/components/FormSlideOver";
+import SelectInput from "@/components/SelectInput";
 import { useRouter } from "next/navigation";
 
+const categoryList = ["One", "Two", "Three", "Four", "Five", "Six", "Seven"];
 export default function NewExpense() {
   const [openCategorySelection, setCategorySelectionOpen] = useState(false);
+  const [category, setCategory] = useState(categoryList[0]);
   const router = useRouter();
   return (
     <>
@@ -18,11 +21,13 @@ export default function NewExpense() {
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               New Expense
             </h2>
-            <SlideOver
+            <FormSlideOver
               open={openCategorySelection}
               closeFunc={() => setCategorySelectionOpen(false)}
+              panelTitle="Create New Category"
+              placeholder="Enter Category Name"
+              submitFunc={() => console.log("test")}
             />
-
             <div className=" border-gray-900/10 pb-12">
               <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-4">
@@ -77,30 +82,18 @@ export default function NewExpense() {
                   </div>
                 </div>
 
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="country"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Category
-                  </label>
-                  <div className="mt-2">
-                    <select
-                      id="country"
-                      name="country"
-                      autoComplete="country-name"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                    >
-                      <option>One</option>
-                      <option>Two</option>
-                      <option>Three</option>
-                    </select>
-                  </div>
+                <div className="col-span-full">
+                  <SelectInput
+                    label="Expense Category"
+                    selected={category}
+                    setSelected={setCategory}
+                    options={categoryList}
+                  />
                   <button
                     type="button"
                     onClick={() => setCategorySelectionOpen(true)}
                   >
-                    <p className="text-sm ml-1 cursor-pointer text-primary">
+                    <p className="text-sm ml-1 mt-2 cursor-pointer text-primary">
                       Create a new Category
                     </p>
                   </button>

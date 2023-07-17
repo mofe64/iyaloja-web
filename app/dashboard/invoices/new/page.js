@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { CheckCircleIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
-import SlideOver from "@/components/slideOver";
+import ListSlideOver from "@/components/slideOver";
 import { useRouter } from "next/navigation";
 
 const invoice = {
@@ -128,11 +128,11 @@ export default function NewInvoice() {
               <h2 className="text-base font-semibold leading-6 text-gray-900">
                 Invoice
               </h2>
-              <SlideOver
+              <ListSlideOver
                 open={openCustomerSelection}
                 closeFunc={() => setOpenCustomerSelection(false)}
               />
-              <SlideOver
+              <ListSlideOver
                 open={openProductSelection}
                 closeFunc={() => setOpenProductSelection(false)}
               />

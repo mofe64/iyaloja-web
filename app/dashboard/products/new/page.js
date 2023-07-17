@@ -1,16 +1,30 @@
 "use client";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import { Switch } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import SelectInput from "@/components/SelectInput";
+import FormSlideOver from "@/components/FormSlideOver";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+const categoryList = ["One", "Two", "Three", "Four", "Five", "Six", "Seven"];
 export default function NewProduct() {
   const router = useRouter();
   const [enabled, setEnabled] = useState(false);
+  const [category, setCategory] = useState(categoryList[0]);
+  const [additonalImages, setAdditonalImages] = useState([]);
+  const [showCreateCategory, setShowCreateCategory] = useState(false);
   return (
     <form>
+      <FormSlideOver
+        open={showCreateCategory}
+        closeFunc={() => setShowCreateCategory(false)}
+        panelTitle="Create New category"
+        placeholder="Enter Category Name"
+        submitFunc={() => console.log("test")}
+      />
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -55,40 +69,66 @@ export default function NewProduct() {
                 Write a few sentences describing the product.
               </p>
             </div>
-
+            <div className="col-span-full">
+              <SelectInput
+                label="Product Category"
+                selected={category}
+                setSelected={setCategory}
+                options={categoryList}
+              />
+              <button
+                type="button"
+                className="mt-1"
+                onClick={() => setShowCreateCategory(true)}
+              >
+                <p className="text-sm ml-1 cursor-pointer text-primary">
+                  Create a new Category
+                </p>
+              </button>
+            </div>
             <div className="col-span-full">
               <label
                 htmlFor="cover-photo"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Product Image
+                Main Product Image
               </label>
-              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                <div className="text-center">
-                  <PhotoIcon
-                    className="mx-auto h-12 w-12 text-gray-300"
-                    aria-hidden="true"
-                  />
-                  <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                    <label
-                      htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                    >
-                      <span>Upload a file</span>
-                      <input
-                        id="file-upload"
-                        name="file-upload"
-                        type="file"
-                        className="sr-only"
-                      />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
-                  </div>
-                  <p className="text-xs leading-5 text-gray-600">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
-                </div>
+              <div className="mt-2 flex justify-center rounded-lg border  border-gray-900/25 px-6 py-10">
+                <input type="file" />
               </div>
+            </div>
+            <div className="col-span-full">
+              <button
+                onClick={() => {
+                  const updated = [...Array(additonalImages.length + 1)];
+                  setAdditonalImages(updated);
+                }}
+                type="button"
+                className="mt-1"
+              >
+                <p className="text-sm ml-1 cursor-pointer text-primary">
+                  Add additonal image
+                </p>
+              </button>
+              {additonalImages.map((image, index) => {
+                return (
+                  <div className="mt-2 flex items-center">
+                    <label className="block text-sm font-medium leading-6 text-gray-900 w-[95%]">
+                      {`Additional image ${index + 1}`}
+                      <input type="file" />
+                    </label>
+                    <XMarkIcon
+                      className="h-6 w-6 text-red-600 cursor-pointer mt-4 ml-4"
+                      aria-hidden="true"
+                      onClick={() => {
+                        const copy = [...additonalImages];
+                        copy.splice(index, 1);
+                        setAdditonalImages(copy);
+                      }}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

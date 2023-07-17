@@ -1,6 +1,7 @@
 "use client";
-import SlideOver from "@/components/slideOver";
+import ListSlideOver from "@/components/slideOver";
 import { useState } from "react";
+import SelectInput from "@/components/SelectInput";
 
 const people = [
   {
@@ -62,12 +63,13 @@ const people = [
     lastSeen: null,
   },
 ];
-
+const orderTypesList = ["Whatapp", "Physical", "Instagram", "Twitter"];
+const orderStatusList = ["Completed", "Pending"];
 export default function NewOrder() {
-  const [openCustomerSelectionSlideOver, setCusomterSelectionOpenSlideOver] =
-    useState(false);
-  const [openProductSelectionSlideOver, setProductSelectionOpenSlideOver] =
-    useState(false);
+  const [openCustomerSelection, setCusomterSelectionOpen] = useState(false);
+  const [openProductSelection, setProductSelectionOpen] = useState(false);
+  const [orderType, setOrderType] = useState(orderTypesList[0]);
+  const [orderStatus, setOrderStatus] = useState(orderStatusList[1]);
   return (
     <form>
       <div className="space-y-12">
@@ -85,9 +87,9 @@ export default function NewOrder() {
                 <p className="block text-sm font-medium leading-6 text-gray-900">
                   Select Customer (Optional)
                 </p>
-                <SlideOver
-                  open={openCustomerSelectionSlideOver}
-                  closeFunc={() => setCusomterSelectionOpenSlideOver(false)}
+                <ListSlideOver
+                  open={openCustomerSelection}
+                  closeFunc={() => setCusomterSelectionOpen(false)}
                   displayList={people}
                   panelTitle="Select Customer"
                 />
@@ -96,7 +98,7 @@ export default function NewOrder() {
                   <button
                     type="button"
                     className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => setCusomterSelectionOpenSlideOver(true)}
+                    onClick={() => setCusomterSelectionOpen(true)}
                   >
                     Select
                   </button>
@@ -106,9 +108,9 @@ export default function NewOrder() {
                 <p className="block text-sm font-medium leading-6 text-gray-900">
                   Select Product
                 </p>
-                <SlideOver
-                  open={openProductSelectionSlideOver}
-                  closeFunc={() => setProductSelectionOpenSlideOver(false)}
+                <ListSlideOver
+                  open={openProductSelection}
+                  closeFunc={() => setProductSelectionOpen(false)}
                   panelTitle="Select Product"
                 />
                 <div className="flex items-center">
@@ -116,55 +118,30 @@ export default function NewOrder() {
                   <button
                     type="button"
                     className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    onClick={() => setProductSelectionOpenSlideOver(true)}
+                    onClick={() => setProductSelectionOpen(true)}
                   >
                     Select
                   </button>
                 </div>
               </div>
-
-              <div className="sm:col-span-2 sm:col-start-1">
-                <label
-                  htmlFor="country"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Order Type
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="country"
-                    name="country"
-                    autoComplete="country-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option>WhatsApp</option>
-                    <option>Twitter</option>
-                    <option>Instagram</option>
-                    <option>Physical Sale</option>
-                  </select>
-                </div>
+              <div className="col-span-full">
+                <SelectInput
+                  label="Order Type"
+                  selected={orderType}
+                  setSelected={setOrderType}
+                  options={orderTypesList}
+                />
+              </div>
+              <div className="col-span-full">
+                <SelectInput
+                  label="Order Status"
+                  selected={orderStatus}
+                  setSelected={setOrderStatus}
+                  options={orderStatusList}
+                />
               </div>
 
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="country"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Order Status
-                </label>
-                <div className="mt-2">
-                  <select
-                    id="country"
-                    name="country"
-                    autoComplete="country-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option>Completed</option>
-                    <option>In Progress</option>
-                  </select>
-                </div>
-              </div>
-              <div className="sm:col-span-4">
+              <div className="col-span-full">
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-gray-900"

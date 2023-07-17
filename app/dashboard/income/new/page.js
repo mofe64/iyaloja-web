@@ -1,7 +1,7 @@
 "use client";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import SlideOver from "@/components/slideOver";
+import ListSlideOver from "@/components/slideOver";
 export default function NewIncome() {
   const [openCategorySelection, setCategorySelectionOpen] = useState(false);
   return (
@@ -11,7 +11,7 @@ export default function NewIncome() {
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             New Income
           </h2>
-          <SlideOver
+          <ListSlideOver
             open={openCategorySelection}
             closeFunc={() => setCategorySelectionOpen(false)}
           />

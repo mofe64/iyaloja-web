@@ -14,6 +14,7 @@ import {
   ArrowLeftOnRectangleIcon,
   BanknotesIcon,
   DocumentChartBarIcon,
+  PresentationChartLineIcon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 
@@ -66,6 +67,12 @@ const DashboardLayout = ({ children }) => {
       href: "/dashboard/analytics",
       icon: ChartPieIcon,
       current: pathname.includes("analytics"),
+    },
+    {
+      name: "Sales Campaigns",
+      href: "/dashboard/campaigns",
+      icon: PresentationChartLineIcon,
+      current: pathname.includes("campaigns"),
     },
     {
       name: "Profile",

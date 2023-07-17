@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { PhotoIcon, ArrowLeftIcon } from "@heroicons/react/24/solid";
-import SlideOver from "@/components/slideOver";
+import ListSlideOver from "@/components/slideOver";
 import { useRouter } from "next/navigation";
 
 export default function EditIncome() {
@@ -19,7 +19,7 @@ export default function EditIncome() {
             <h2 className="text-base font-semibold leading-7 text-gray-900">
               Edit Income
             </h2>
-            <SlideOver
+            <ListSlideOver
               open={openCategorySelection}
               closeFunc={() => setCategorySelectionOpen(false)}
             />

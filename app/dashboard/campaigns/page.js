@@ -46,13 +46,13 @@ const people = [
   // More people...
 ];
 
-export default function ExpensesDashboard() {
+export default function SalesCampaignsDashboard() {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   return (
     <>
       <DeleteModal
-        entity={"Expense"}
+        entity={"Sales Campaign"}
         show={showModal}
         close={() => {
           setShowModal(false);
@@ -61,24 +61,23 @@ export default function ExpensesDashboard() {
           setShowModal(false);
         }}
       />
-      <ActionPanel />
       <div className="mt-5 px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-lg font-semibold leading-6 text-gray-900">
-              Expenses
+              Sales Campaigns
             </h1>
             <p className="mt-2 text-sm text-gray-700">
-              A list of all your business Expenses
+              A list of all current and past sales campaigns
             </p>
           </div>
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <Link
               href={"/dashboard/expenses/new"}
               type="button"
-              className="block rounded-md bg-red-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              className="block rounded-md bg-primary px-3 py-2 text-center text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             >
-              Record Expense
+              New Campaign
             </Link>
           </div>
         </div>
@@ -98,22 +97,22 @@ export default function ExpensesDashboard() {
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Category
+                      Status
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Date
+                      Start Date
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Amount
+                      End Date
                     </th>
                     <th scope="col" className="relative py-3.5 pl-3 pr-0">
-                      <span className="sr-only">Edit</span>
+                      <span className="sr-only">Pause</span>
                     </th>
                     <th scope="col" className="relative py-3.5 pl-3 pr-0">
                       <span className="sr-only">Delete</span>
@@ -126,7 +125,7 @@ export default function ExpensesDashboard() {
                       <td
                         className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"
                         onClick={() =>
-                          router.push("/dashboard/expenses/1/details")
+                          router.push("/dashboard/campaigns/1/controlCenter")
                         }
                       >
                         {person.name}
@@ -145,7 +144,7 @@ export default function ExpensesDashboard() {
                           href="/dashboard/expenses/1/edit"
                           className="text-indigo-600 hover:text-indigo-900"
                         >
-                          Edit<span className="sr-only">, {person.name}</span>
+                          Pause
                         </Link>
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm sm:pr-0">
